@@ -4,19 +4,25 @@ import com.example.crudCliente.controller.Client;
 import com.example.crudCliente.service.ClientService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ClientServiceImpl implements ClientService {
     @Override
     public Client updateClient(String id, Client client) {
         Client clientNew = loadClient(id); // lo que debería hacer es cargar el cliente de ese id y actualizarlo y grabarlo
+
+        if(client.getDocument() == null){
+            throw new IllegalArgumentException("Document required");
+        }
         clientNew.setDocument(client.getDocument());
         clientNew.setFirstName(client.getFirstName());
         clientNew.setLastName(client.getLastName());
         clientNew.setEmail(client.getEmail());
         clientNew.setPhone(client.getPhone());
-        clientNew.setCreatedDate(new Date());
+        clientNew.setUpdatedDate(new Date());
         return clientNew;
     }
 
@@ -42,6 +48,18 @@ public class ClientServiceImpl implements ClientService {
         clientNew.setCreatedDate(new Date());
         return clientNew;
     }
+
+    @Override
+    public List<Client> loadAll() {
+        List<Client> listaClientes = new ArrayList<>();
+        Client clientNew = loadClient("345");
+        listaClientes.add(clientNew);
+        clientNew = loadClient("678");
+        listaClientes.add(clientNew);
+        //return List.of(clientNew);
+        return listaClientes;
+    }
+
 
     @Override
     public Client createClient(Client client) {

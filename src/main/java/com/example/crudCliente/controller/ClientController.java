@@ -5,10 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping( "/client" )
+@RequestMapping( "/clients" )
 
 public class ClientController {
     private final ClientService clientService;
@@ -31,12 +32,17 @@ public class ClientController {
      *
     * */
 
-    @GetMapping("/{id}") //load
+    @GetMapping("/{id}") //carga desde el load un cliente por id
     @ResponseBody
     public ResponseEntity<Client> loadClient(@PathVariable String id) {
         return ResponseEntity.ok(clientService.loadClient(id));
     }
 
+    @GetMapping //carga desde el load todos los clientes
+    @ResponseBody
+    public ResponseEntity<List<Client>> loadClient() {
+        return ResponseEntity.ok(clientService.loadAll());
+    }
     @PutMapping("/{id}") //update
     @ResponseBody
     public ResponseEntity<Client> updateClient(@PathVariable String id, @RequestBody Client cliente) {

@@ -15,4 +15,5 @@ public class Client {
     private String email;
     private String phone;
     private Date createdDate;
+    private Date updatedDate;
 }
